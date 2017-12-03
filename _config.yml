@@ -5,7 +5,7 @@ title2: "mek" # default: ""
 description: "Faymek's think space."
 keywords: "Faymek, SEO, blog, web, minimalist, thinkspace"
 url: https://faymek.github.io/thinkspace # site url
-baseurl: "" # apply repo name if use it under gh-pages branch
+baseurl: "/fay" # apply repo name if use it under gh-pages branch
 
 google_analytics: UA-XXXXX-XX
 repo: https://github.com/faymek/thinkspace
