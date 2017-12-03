@@ -1,0 +1,58 @@
+
+# SEO settings
+title: "Fay"
+title2: "mek" # default: ""
+description: "Faymek's think space."
+keywords: "Faymek, SEO, blog, web, minimalist, thinkspace"
+url: https://faymek.github.io/thinkspace # site url
+baseurl: "" # apply repo name if use it under gh-pages branch
+
+google_analytics: UA-XXXXX-XX
+repo: https://github.com/faymek/thinkspace
+disqus_shortname: "hnbloggithub"
+twitter_username: "HeiswayiNrird"
+comments: true
+
+# Build settings
+permalink   : /:year/:title/
+markdown    : kramdown
+highlighter : rouge
+
+source: ./
+destination: ./_site
+
+# Sass configuration
+sass:
+  sass_dir: assets/scss
+  style: compressed # expanded
+
+# Author settings
+author:
+  name     : "Faymek Feng"
+  job      : "World Changer"
+  bio      : "Each generation must, out of relative obscurity, discover its mission, fulfill it, or betray it."
+  thumb    : /images/author.jpg
+  email    : faymek.f@gmail.com
+  url      : https://faymek.github.io
+  github   : https://github.com/faymek
+  twitter  : http://twitter.com/FaymekF
+  facebook : https://www.facebook.com/FaymekF
+  #linkedin : http://linkedin.com/in/nrird
+
+# social settings
+og_locale: "en_US"
+twitter_card: "summary_large_image"
+twitter_site: "@FaymekF"
+
+gems:
+  - bourbon
+  - jekyll-paginate
+
+# navbar pages
+navbar:
+  - slug : about
+    title: About
+  - slug : blog
+    title: Blog
+
+exclude: ["gulp", "node_modules", "bower", "bower_components", "config.rb", "src", "Gemfile", "Gemfile.lock", ".rvmrc", ".rbenv-version", "package.json", "gulpfile.js", "README.md", "Rakefile", "changelog.md"]
