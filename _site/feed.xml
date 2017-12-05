@@ -5,8 +5,8 @@
     <description>Faymek's think space.</description>
     <link>http://localhost:4000/fay/</link>
     <atom:link href="http://localhost:4000/fay/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 03 Dec 2017 14:17:39 +0800</pubDate>
-    <lastBuildDate>Sun, 03 Dec 2017 14:17:39 +0800</lastBuildDate>
+    <pubDate>Wed, 06 Dec 2017 00:08:21 +0800</pubDate>
+    <lastBuildDate>Wed, 06 Dec 2017 00:08:21 +0800</lastBuildDate>
     <generator>Jekyll v3.6.2</generator>
     
       <item>
@@ -34,6 +34,377 @@
         <pubDate>Sun, 03 Dec 2017 00:00:00 +0800</pubDate>
         <link>http://localhost:4000/fay/2017/Welcome-to-my-thinkspce/</link>
         <guid isPermaLink="true">http://localhost:4000/fay/2017/Welcome-to-my-thinkspce/</guid>
+        
+        
+      </item>
+    
+      <item>
+        <title>阿里云部署 django gunicorn nginx mysql ubuntu python3</title>
+        <description>&lt;p&gt;摘要: Django + mysql + nginx + gunicorn + supervisord + ubuntu&lt;/p&gt;
+
+&lt;p&gt;因为毕业设计需要个服务器来提供api，于是乎弄了个阿里云的ecs。平时都是在本机上运行的开发服务器，所以部署还是花了不少时间。真的有不少坑，这里我也把遇到的坑顺带提了一下。&lt;/p&gt;
+
+&lt;h2 id=&quot;主要用下面这些东西&quot;&gt;主要用下面这些东西&lt;/h2&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Ubuntu：因为大家都说Ubuntu简单方便，我就选它了&lt;/li&gt;
+  &lt;li&gt;Django：python上的web开发我喜欢用它，方便好用&lt;/li&gt;
+  &lt;li&gt;Gunicorn : 一个Python WSGI UNIX的HTTP服务器，按我的理解，它的作用可能就是用来代替django自带server的。有了它就不用自带的runserver了，自带的server只能单线程运行，而这个能并发多线程。&lt;/li&gt;
+  &lt;li&gt;Nginx：高性能的HTTP和反向代理服务器，按我的理解主要干这几件事
+    &lt;ul&gt;
+      &lt;li&gt;缓冲请求：直到收完整个请求，再转发给Gunicorn，避免Gunicorn一直占用进程等待接收完成。&lt;/li&gt;
+      &lt;li&gt;负载均衡：由nginx占用80端口，而gunicorn同时运行多个程序占用不同的端口。Nginx根据客户端发来的不同的url请求，把请求分发给不同的程序。这样就达到一台服务器运行多个网站的目的呢&lt;/li&gt;
+      &lt;li&gt;访问控制：限制流量，限制ip，限制连接数量&lt;/li&gt;
+      &lt;li&gt;处理静态文件：对图片css之类的静态文件请求不用经过Python服务器，直接由Nginx处理，可能更快吧&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Supervisord：python2.x写的进程管理程序，用他来管理gunicorn的运行情况，当gunicorn的进程挂了，可以自动重新运行gunicorn。&lt;/li&gt;
+  &lt;li&gt;git：把服务器设置成git服务器，以后每次修改了代码只用push一次就完事了。&lt;/li&gt;
+  &lt;li&gt;Mysql：没什么好说的&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;总的来说运行起来就是:
+浏览器 &amp;lt;–&amp;gt; Nginx服务器 &amp;lt;-socket-&amp;gt; Gunicorn &amp;lt;–&amp;gt; Django&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;安装配置环境&quot;&gt;安装配置环境&lt;/h2&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;安装过程中会遇到了很多loc什么什么的错误，那是因为vps没有设置好，关于这点，很郁闷，网上的各种文章都没提到这个。
+解决方法就是设置环境变量，把&lt;code class=&quot;highlighter-rouge&quot;&gt;export LC_ALL=C&lt;/code&gt;加到.bash里面去&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;另外网上的教程都是用的virtualenv来弄虚拟环境，可是我配置的时候怎么都弄不好，总是报错，所以干脆就用python3自带的虚拟环境了，值得说的是他会提示你安装python3-venv 安装了不行的话 可以尝试安装python3.5-venv，&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;注意一定要记得把上面提到的环境变量设置好，不然venv狂报错，我反正当时google好半天都没找出这个原因。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;#更新VPS的apt-get里的东西
+sudo apt-get update
+sudo apt-get upgrade
+
+#给本机的python2安装pip，关于pip我也是很服气的。。
+sudo apt-get install python-pip
+ 
+#安装Supervisor
+sudo apt-get install supervisor
+ 
+#安装Nginx
+sudo apt-get install nginx
+
+#安装git
+sudo apt-get install git
+
+#安装python3和venv,安装后输入python3就运行的python3，输入pip3 运行的就是python3的pip
+sudo apt-get install python3
+sudo apt-get install python3-venv
+sudo apt-get install python3-pip  
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;配置git仓库&quot;&gt;配置git仓库&lt;/h3&gt;
+
+&lt;p&gt;把自己电脑上&lt;code class=&quot;highlighter-rouge&quot;&gt;~/.ssh/id_ras.pub&lt;/code&gt;里ras公钥告诉服务器，这样他就知道你是自己人，允许你去上传东西&lt;/p&gt;
+
+&lt;p&gt;把公钥复制在这个文件最后面&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;vim ~/.ssh/authorized_keys
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;在服务器上创建用来提交代码的空仓库&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;cd /srv
+mkdir xxxx.git
+cd xxxx.git
+git init --bare
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;指定工作区为网站的代码目录，以后网站的源码就放在/webapps/xxxx/code里面了&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git clone /srv/xxxx.git /webapps/xxxx/code
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;添加git钩子，作用呢就是当有代码push的时候，可以自动复制到刚才设置的工作区去&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;cd /srv/xxxx.git/hooks/
+vim post-receive
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;修改并复制下面的内容进去&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#!/bin/sh&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;# This file is to be used by git repo on server&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# It should be a file called hooks/post-receive in the bare git repo&lt;/span&gt;
+
+&lt;span class=&quot;nb&quot;&gt;set&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-xe&lt;/span&gt; 
+
+&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Running Post Receive Hook&quot;&lt;/span&gt;
+
+&lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;GIT_WORK_TREE&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/webapps/xxxx/code
+&lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;GIT_DIR&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;GIT_WORK_TREE&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;/.git
+
+&lt;span class=&quot;nb&quot;&gt;cd&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;GIT_WORK_TREE&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;
+git fetch origin
+git reset &lt;span class=&quot;nt&quot;&gt;--hard&lt;/span&gt; origin/master
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;修改post-receive的权限&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;chmod u+x post-receive
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;回到本机上传代码&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git remote add aliyun root@XXXXXXXX:/srv/xxx.git
+git push -u aliyun master
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;配置虚拟环境&quot;&gt;配置虚拟环境&lt;/h3&gt;
+
+&lt;p&gt;现在去/srv/webapps里面看看代码上传好没，然后配置下虚拟环境&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; sudo python3 -m venv xxxx
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;开启虚拟环境，&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;cd /sev/webapps/xxxx
+source bin/activate
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;现在就进入虚拟环境中了，运行python和pip命令都是虚拟环境中的python和pip，不管怎么弄都不会影响系统中自带的python，所以现在就可以用pip安装所需的库了。&lt;/p&gt;
+
+&lt;p&gt;安装完后用下面的语句退出环境&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;deactivate
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;###安装mysql&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo apt-get install mysql-server mysql-client
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;重新进下虚拟环境，在虚拟环境中运行&lt;code class=&quot;highlighter-rouge&quot;&gt;pip install mysqlclient&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;因为我的项目是python3的所以用mysqlclient，好像python2得用另一个，我也是真的是懒得管了，我已经完全服气了，部署个服务器在网上到处搜教程照着一模一样的做，结果不是这里报错就是那里报错，满世界google，什么破东西&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;好，安装好mysql，登陆进去建个数据库，一定要记得设置编码呀&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;create database 数据库名 default charset utf8 collate utf8_general_ci
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;然后出来配置下Django的&lt;code class=&quot;highlighter-rouge&quot;&gt;setting.py&lt;/code&gt; 弄成类似这样&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': '刚才建的数据库名',
+        'USER':'用户名',
+        'PASSWORD':'密码',
+        'HOST':'127.0.0.1',
+        'PORT':3306,
+    }
+}
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;使用gunicorn&quot;&gt;使用gunicorn&lt;/h3&gt;
+
+&lt;p&gt;先打开虚拟环境，在虚拟环境中安装gunicorn&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo pip install gunicorn
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;在项目目录里面然后测试下gunicorn是否正常运行（项目目录就是manage.py所在的目录 因为我们用的虚拟环境所以要这样&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;GUNICORN地址 --chdir 项目目录地址 --pythonpath PYTHON地址 -w4 -b127.0.0.1:8000 xxxx.wsgi
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;其中GUNICORN地址和PYTHON地址可以开启虚拟环境后分别用&lt;code class=&quot;highlighter-rouge&quot;&gt;which gunicorn&lt;/code&gt;和&lt;code class=&quot;highlighter-rouge&quot;&gt;which python&lt;/code&gt;得到，而项目地址就是manage.py的那个目录地址，可以切换过去用&lt;code class=&quot;highlighter-rouge&quot;&gt;pwd&lt;/code&gt;得到&lt;/p&gt;
+
+&lt;p&gt;如果没用虚拟环境的话，直接这样就行了&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;gunicorn -w4 -b127.0.0.1:8000 xxxx.wsgi
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;现在你应该就能从服务器ip的8000端口访问网站了。ctrl+c结束&lt;/p&gt;
+
+&lt;p&gt;如果浏览器返回 Bad Request (400）那多半是你setting.py里面ALLOWED_HOSTS数组里没设置好咯，把自己的ip或者域名设置进去，或者直接设置成&lt;code class=&quot;highlighter-rouge&quot;&gt;ALLOWED_HOSTS=['*',]&lt;/code&gt;就行了&lt;/p&gt;
+
+&lt;h3 id=&quot;使用supervisord&quot;&gt;使用supervisord&lt;/h3&gt;
+
+&lt;p&gt;生成 supervisor 默认配置文件&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;echo_supervisord_conf &amp;gt; /etc/supervisord.conf
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;打开supervisor.conf在最后添加这些配置&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[program:xxxx] ;这个xxxx可以自己随便取，只是方便标识
+command=刚才启动gunicorn输入的那个命令
+directory=项目所在地址，和刚才gunicorn里用的那个项目地址一样的
+startsecs=0
+stopwaitsecs=0
+autostart=true
+autorestart=true
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;启动supervisor服务端，启动的时候会自动的吧配置文件里刚才设置的程序运行。注意: supervisord启动了服务端程序以后，就只需用supervisorctl客户端来进行操作了&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;supervisord -c /etc/supervisord.conf
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;在supervisor客户端上重启xxxx程序&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;supervisorctl -c /etc/supervisord.conf restart xxxx
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;启动，停止，或重启 supervisor 管理的某个程序 或 所有程序：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;supervisorctl -c /etc/supervisord.conf [start|stop|restart] [program-name|all]
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;查看程序当前的运行状态：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;supervisorctl -c /etc/supervisord.conf status
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;配置django&quot;&gt;配置Django&lt;/h2&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;#因为django只在开发服务器上处理静态文件，而部署后静态文件是交给nginx处理的，所以这样要把用到的静态文件收集到一个目录里面，方便使用
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'collected_static')
+
+#设置media目录
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;搜集静态文件，这会自动把静态文件收集到刚才设置的collected_static目录里&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;python manage.py collectstatic
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;在全局的urls.py里面，加上处理静态文件的url&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+
+urlpatterns = [.........] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + staticfiles_urlpatterns()
+
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;开发环境与部署环境分离，因为部署后要把debug之类的关了，但是每次都修改很麻烦，我这里采用的是判断hostname的方法，把这个写在setting.py里面，&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;if socket.gethostname() == 'GoGodeMacBook-Pro.local': #本机
+    DEBUG=True
+    TEMPLATE_DEBUG = True
+    DATABASES=........
+else: # 服务器
+    DEBUG=False
+    TEMPLATE_DEBUG = False
+    DATABASES=........
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;然后我部署的时候还遇到个问题，他老提示我找不到zh_Hans语言包，原来是中间件MIDDLEWARE里没加&lt;code class=&quot;highlighter-rouge&quot;&gt;django.middleware.locale.LocaleMiddleware&lt;/code&gt;这个要加在&lt;code class=&quot;highlighter-rouge&quot;&gt;django.contrib.sessions.middleware.SessionMiddleware&lt;/code&gt;的后面，奇怪的是我本机上并没有报错啊..&lt;/p&gt;
+
+&lt;h3 id=&quot;使用nginx&quot;&gt;使用nginx&lt;/h3&gt;
+
+&lt;p&gt;新建网站配置,sites-avaliable顾名思义就是存放可以使用的网站，但不一定要运行这些网站，还有一个sites-enabled目录存放需要运行的网站，要激活一个网站就软连接到sites-enabled，然后重启nginx就行了&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo vim /etc/nginx/sites-available/xxxxxx.conf
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;添加如下配置：(记得把#开头的备注删了…&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;server {
+    listen  80; #外网通过这个端口访问
+    server_name xxxxx.com; #域名或者ip地址
+    charset     utf-8;
+    access_log  /var/log/nginx/pixelMill.log; #日志会记录在这个文件
+
+
+    client_max_body_size 75M;
+
+    location /media  {
+        alias /webapps/xx/code/media;   #django里面的media路径
+    }
+
+    location /static {
+	expires 30d;
+        alias /webapps/xx/code/collected_static;  #django里面的static路径
+    }
+
+    #除了media和static以外的请求都给django处理
+    location / {
+        proxy_pass http://127.0.0.1:8000;   #刚才gunicorn设置的端口
+        include     /etc/nginx/uwsgi_params;
+    }
+}
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;这个配置就告诉了nginx，nginx自己负责media文件和静态文件，其他请求就让Django负责&lt;/p&gt;
+
+&lt;p&gt;激活网站：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo ln -s /etc/nginx/sites-available/xxx.conf /etc/nginx/sites-enabled/xxxx.conf
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;测试配置文件&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo service nginx configtest
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;要是fail的话，其实可以先restart下，然后照他的提示输入&lt;code class=&quot;highlighter-rouge&quot;&gt;systemctl status nginx.service&lt;/code&gt;然后会告诉你哪行出错了&lt;/p&gt;
+
+&lt;p&gt;重启Nginx服务器，注意每次修改了配置文件都需要restart或者reload&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo service nginx restart
+#或者
+sudo service nginx reload
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;好了完了~~&lt;/p&gt;
+
+</description>
+        <pubDate>Sat, 14 Oct 2017 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/fay/2017/%E9%98%BF%E9%87%8C%E4%BA%91%E9%83%A8%E7%BD%B2-django-gunicorn-nginx-mysql-ubuntu-python3/</link>
+        <guid isPermaLink="true">http://localhost:4000/fay/2017/%E9%98%BF%E9%87%8C%E4%BA%91%E9%83%A8%E7%BD%B2-django-gunicorn-nginx-mysql-ubuntu-python3/</guid>
         
         
       </item>
