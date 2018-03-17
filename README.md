@@ -1,4 +1,20 @@
-# Faymek's Thinkspace
+# Fay
+
+Inspired from ThinkSpace.
+
+### Struct
+
+Home
+
+Tags
+
+Archives
+
+About
+
+RSS
+
+
 
 ### Install
 
@@ -8,6 +24,4 @@ bundle install
 jekyll serve
 ```
 
-### License
-
-[MIT](LICENSE.md)
+### 
