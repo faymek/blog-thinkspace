@@ -30,7 +30,8 @@ sass:
 author:
   name     : "Faymek Feng"
   job      : "World Changer"
-  bio      : "Each generation must, out of relative obscurity, discover its mission, fulfill it, or betray it."
+  #bio      : "Each generation must, out of relative obscurity, discover its mission, fulfill it, or betray it."
+  bio      : "..."
   thumb    : /images/author.jpg
   email    : faymek.f@gmail.com
   url      : https://faymek.github.io

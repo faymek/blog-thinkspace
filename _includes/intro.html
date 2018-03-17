@@ -1,6 +1,7 @@
 <section class="intro">
   <div class="container">
     <p class="lead"><strong class="author-name" itemprop="name">{{ site.author.name }}</strong>, a <em itemprop="jobTitle">{{ site.author.job }}</em>. <br>
-    <blockquote><p>{{ site.author.bio }}</p></blackquote></p>
+    <blockquote><p id="authorbio">{{ site.author.bio }}</p></blackquote></p>
+    {% include poem.html %}
   </div>
 </section>
