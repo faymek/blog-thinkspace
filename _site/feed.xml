@@ -5,9 +5,162 @@
     <description>Faymek's think space.</description>
     <link>http://localhost:4000/fay/</link>
     <atom:link href="http://localhost:4000/fay/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 25 Mar 2018 15:01:09 +0800</pubDate>
-    <lastBuildDate>Sun, 25 Mar 2018 15:01:09 +0800</lastBuildDate>
-    <generator>Jekyll v3.6.2</generator>
+    <pubDate>Sun, 23 Sep 2018 00:40:02 +0800</pubDate>
+    <lastBuildDate>Sun, 23 Sep 2018 00:40:02 +0800</lastBuildDate>
+    <generator>Jekyll v3.8.4</generator>
+    
+      <item>
+        <title>解决Coursera国内速度慢的问题</title>
+        <description>&lt;p&gt;参考： &lt;a href=&quot;https://blog.qiujinfeng.com/archives/speed-up-coursera.html&quot;&gt;解决国内访问Coursera访问速度慢的问题&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;背景&quot;&gt;背景&lt;/h2&gt;
+
+&lt;p&gt;在这里我会讲讲怎么分样Coursera网页或者视频资源打不开的原因，以及给出一些相应的解决方案。&lt;/p&gt;
+
+&lt;p&gt;你需要有以下这些前置知识：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;Chrome、Firefox或者其它浏览器下使用开发者工具&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;科学上网工具&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;计算机网络知识（非必须，如果了解你能更好地理解后面的内容）&lt;/p&gt;
+
+    &lt;h2 id=&quot;原因分析&quot;&gt;原因分析&lt;/h2&gt;
+
+    &lt;p&gt;这里以Chrome浏览器为例，当然任何带有开发者模式的浏览器都是可以的。&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;点开一个视频(网页)，发现视频(网页)很卡加载不出来，视频一直是0:00/0:00。
+&lt;img src=&quot;https://wx4.sinaimg.cn/large/728592fegy1fmc2q1w0jmj213b0l3q4u.jpg&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Chrome打开开发者模式，Windows下按F12，Mac下⌘⌥I，然后点击console&lt;/p&gt;
+
+    &lt;p&gt;&lt;img src=&quot;https://ws1.sinaimg.cn/large/006NGwI5gy1fmazpi8x1gj31hb0pxq81.jpg&quot; alt=&quot;img&quot; /&gt;
+发现有资源没(bei)加(qiang)载(le)出来。&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;解决方案&quot;&gt;解决方案&lt;/h2&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;科学上网
+有的童鞋可能会说，我已经科学上网啦，但是好像并没有起作用呢？
+你需要确认，你要访问的这个网址是通过科学上网访问的。也就是说，如果你的代理没有起作用的话，一样是无法加载出来的。
+以ss为例子，
+&lt;strong&gt;如果觉得麻烦的话，你可以跳过下面的内容，使用全局代理。&lt;/strong&gt;
+如果&lt;strong&gt;使用PAC自动模式&lt;/strong&gt;的话，ss自带的PAC里并没有coursera，你需要编辑PAC用户自定义规则。
+在末尾追加两条
+（第一条是对Coursera的代理，第二条是对视频等资源的cdn的代理）。
+&lt;strong&gt;注意第二条需要根据你自己的实际情况更改。&lt;/strong&gt;
+我演示的例子里资源的cdn地址是。Coursera的资源托管在亚马逊上面，通常的形式就是类似于下面的这个网址的形式。&lt;/p&gt;
+
+    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;https://d3njjcbhbojbot.cloudfront.net
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+
+    &lt;p&gt;那么我需要编辑成为&lt;/p&gt;
+
+    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;||www.coursera.org
+||d3c33hcgiwev3.cloudfront.net
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+
+    &lt;p&gt;Windows下编辑ss安装目录下的user-rule.txt文件。&lt;/p&gt;
+
+    &lt;p&gt;&lt;img src=&quot;https://ws1.sinaimg.cn/large/006NGwI5gy1fmazsspcwuj30ng0asabw.jpg&quot; alt=&quot;windows下的设置&quot; /&gt;&lt;/p&gt;
+
+    &lt;p&gt;MAC下的设置：
+&lt;img src=&quot;https://wx4.sinaimg.cn/large/728592fegy1fmc2mv0srrj208s0bat9x.jpg&quot; alt=&quot;image&quot; /&gt;
+&lt;img src=&quot;https://wx4.sinaimg.cn/large/728592fegy1fmc2o01l41j20gg0b8jsl.jpg&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;保存确定，重新打开网页试试看吧。如果代理成功，你在打开Coursera时,ss的小飞机会有箭头在闪烁,ss的日志里也会有相应的记录哦。&lt;/p&gt;
+
+    &lt;p&gt;当然这么设置之后，可能仍有一些项目没有被代理到。利用上述方法分析和添加用户规则即可。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;关于使用hosts
+前面有答主提到了更改hosts的方式。个人来说不建议直接更改hosts，比较麻烦。
+因为hosts有可能会失效，hosts失效后需要更新，否则可能会上不去那个网站。（之前有一次用hosts的方式上wiki，后来hosts失效了，导致一直上不去wiki，打开代理也不行。我也忘记了我改了hosts，最后找了好久才发现）。
+建议提供找hosts的方法。不过由于购买代理的价格也不高，所以我也没去折腾这个了。&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+</description>
+        <pubDate>Tue, 31 Jul 2018 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/fay/2018/%E8%A7%A3%E5%86%B3Coursera%E5%9B%BD%E5%86%85%E9%80%9F%E5%BA%A6%E6%85%A2%E7%9A%84%E9%97%AE%E9%A2%98/</link>
+        <guid isPermaLink="true">http://localhost:4000/fay/2018/%E8%A7%A3%E5%86%B3Coursera%E5%9B%BD%E5%86%85%E9%80%9F%E5%BA%A6%E6%85%A2%E7%9A%84%E9%97%AE%E9%A2%98/</guid>
+        
+        
+      </item>
+    
+      <item>
+        <title>pip源使用国内镜像</title>
+        <description>&lt;h2 id=&quot;使用国内源&quot;&gt;使用国内源&lt;/h2&gt;
+
+&lt;p&gt;新版ubuntu要求使用https源，要注意。&lt;/p&gt;
+
+&lt;p&gt;清华：https://pypi.tuna.tsinghua.edu.cn/simple&lt;/p&gt;
+
+&lt;p&gt;阿里云：http://mirrors.aliyun.com/pypi/simple/&lt;/p&gt;
+
+&lt;p&gt;中国科技大学 https://pypi.mirrors.ustc.edu.cn/simple/&lt;/p&gt;
+
+&lt;p&gt;华中理工大学：http://pypi.hustunique.com/&lt;/p&gt;
+
+&lt;p&gt;山东理工大学：http://pypi.sdutlinux.org/&lt;/p&gt;
+
+&lt;p&gt;豆瓣：http://pypi.douban.com/simple/&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;临时使用：&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;可以在使用pip的时候加参数-i https://pypi.tuna.tsinghua.edu.cn/simple
+例如：pip install -i https://pypi.tuna.tsinghua.edu.cn/simple pyspider，这样就会从清华这边的镜像去安装pyspider库。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;永久修改：&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Linux下，修改 ~/.pip/pip.conf (没有就创建一个文件夹及文件。文件夹要加“.”，表示是隐藏文件夹)&lt;/p&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;mkdir&lt;/span&gt; ~/.pip
+vim ~/.pip/pip.conf
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;内容如下：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[global]
+index-url = https://pypi.tuna.tsinghua.edu.cn/simple
+[install]
+trusted-host=mirrors.aliyun.com
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;windows下，直接在user目录中创建一个pip目录，如：C:\Users\xx\pip，新建文件pip.ini。内容同上。&lt;/p&gt;
+
+&lt;h2 id=&quot;升级所有包&quot;&gt;升级所有包&lt;/h2&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;pip3 freeze &lt;span class=&quot;nt&quot;&gt;--local&lt;/span&gt; | &lt;span class=&quot;nb&quot;&gt;grep&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-v&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'^-e'&lt;/span&gt; | &lt;span class=&quot;nb&quot;&gt;cut&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-d&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-f&lt;/span&gt; 1  | xargs &lt;span class=&quot;nt&quot;&gt;-n1&lt;/span&gt; pip3 &lt;span class=&quot;nb&quot;&gt;install&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-U&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;如果安装了on my zsh：&lt;/p&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;//使用文本编辑器打开 ~/.zshrc
+&lt;span class=&quot;nb&quot;&gt;alias &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;pip_all&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;pip3 freeze --local | grep -v '^&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\-&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;e' | cut -d = -f 1  | xargs -n1 pip3 install -U&quot;&lt;/span&gt;12
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+</description>
+        <pubDate>Sat, 09 Jun 2018 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/fay/2018/PIP%E6%BA%90%E4%BD%BF%E7%94%A8%E5%9B%BD%E5%86%85%E9%95%9C%E5%83%8F/</link>
+        <guid isPermaLink="true">http://localhost:4000/fay/2018/PIP%E6%BA%90%E4%BD%BF%E7%94%A8%E5%9B%BD%E5%86%85%E9%95%9C%E5%83%8F/</guid>
+        
+        
+      </item>
     
       <item>
         <title>个人主页添加随机BGM</title>
@@ -72,7 +225,7 @@
 
 &lt;h3 id=&quot;11-安装selenium&quot;&gt;1.1 安装selenium&lt;/h3&gt;
 
-&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;pip install selenium
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;pip &lt;span class=&quot;nb&quot;&gt;install &lt;/span&gt;selenium
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;python
@@ -111,9 +264,9 @@
 &lt;p&gt;下载解压后，放到/usr/bin，然后加上执行权限，命令如下：&lt;/p&gt;
 
 &lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;unzip chromedriver_linux64.zip
-&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;mv chromedriver /usr/bin/
+&lt;span class=&quot;nb&quot;&gt;sudo mv &lt;/span&gt;chromedriver /usr/bin/
 &lt;span class=&quot;nb&quot;&gt;cd&lt;/span&gt; /usr/bin
-&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;chmod +x chromedriver
+&lt;span class=&quot;nb&quot;&gt;sudo chmod&lt;/span&gt; +x chromedriver
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;另一个geckodriver也是一样。&lt;/p&gt;
@@ -216,6 +369,60 @@
         <pubDate>Sun, 03 Dec 2017 00:00:00 +0800</pubDate>
         <link>http://localhost:4000/fay/2017/Welcome-to-my-thinkspce/</link>
         <guid isPermaLink="true">http://localhost:4000/fay/2017/Welcome-to-my-thinkspce/</guid>
+        
+        
+      </item>
+    
+      <item>
+        <title>解决Win10和Ubuntu16时间差的问题</title>
+        <description>&lt;h1 id=&quot;问题成因&quot;&gt;问题成因&lt;/h1&gt;
+
+&lt;p&gt;先说下两个概念：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;UTC即Universal Time Coordinated，协调世界时（&lt;a href=&quot;https://link.zhihu.com/?target=http%3A//baike.baidu.com/link%3Furl%3DHnX2f1XGSuotBE1y-885nj2eeiyHnFBdgWHP_f0hCNDSHO9kUbSSNDaYDJ9BQ4p5JUzMhZfbPKv76FkHnZ5CtPgACZ5uVpz3R48L_SDVcQr0Q7jI75gXTkKwerfz1sOY8VFrTL0ddG-NmmwxIfXFSK&quot;&gt;世界统一时间&lt;/a&gt;）&lt;/li&gt;
+  &lt;li&gt;GMT 即Greenwich Mean Time，格林尼治平时&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Windows 与 Mac/Linux 看待系统硬件时间的方式是不一样的：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;Windows把计算机硬件时间当作本地时间(local time)，所以在Windows系统中显示的时间跟BIOS中显示的时间是一样的。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Linux/Unix/Mac把计算机硬件时间当作 UTC， 所以在Linux/Unix/Mac系统启动后在该时间的基础上，加上电脑设置的时区数（ 比如我们在中国，它就加上“8” ）&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;因此，Linux/Unix/Mac系统中显示的时间总是比Windows系统中显示的时间快8个小时。所以，当你在Linux/Unix/Mac系统中，把系统现实的时间设置正确后，其实计算机硬件时间是在这个时间上减去8小时，所以当你切换成Windows系统后，就会发现时间慢了8小时。&lt;/p&gt;
+
+&lt;h1 id=&quot;解决方法&quot;&gt;解决方法&lt;/h1&gt;
+
+&lt;p&gt;这里提供两种解决方法，个人倾向于使用第一种。&lt;/p&gt;
+
+&lt;p&gt;1.在Ubuntu中把计算机硬件时间改成系统显示的时间，即禁用Ubuntu的UTC。&lt;/p&gt;
+
+&lt;p&gt;在 Ubuntu 16.04 版本以前，关闭UTC的方法是编辑/etc/default/rcS，将UTC=yes改成UTC=no， 但在Ubuntu 16.04使用systemd启动之后，时间改成了由timedatectl来管理，所以更改方法是&lt;/p&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;timedatectl set-local-rtc 1 &lt;span class=&quot;nt&quot;&gt;--adjust-system-clock&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;执行后重启Ubuntu，应该就没有问题了。&lt;/p&gt;
+
+&lt;p&gt;2.修改 Windows对硬件时间的对待方式，让 Windows把硬件时间当作UTC.&lt;/p&gt;
+
+&lt;p&gt;打开命令行程序，在命令行中输入下面命令并回车&lt;/p&gt;
+
+&lt;div class=&quot;language-powershell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Reg add HKLM\SYSTEM\CurrentControlSet\Control\TimeZoneInformation /v RealTimeIsUniversal /t REG_DWORD /d 1
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;应该就没有问题了。&lt;/p&gt;
+
+</description>
+        <pubDate>Wed, 25 Oct 2017 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/fay/2017/%E8%A7%A3%E5%86%B3Win10%E5%92%8CUbuntu16%E6%97%B6%E9%97%B4%E5%B7%AE%E7%9A%84%E9%97%AE%E9%A2%98/</link>
+        <guid isPermaLink="true">http://localhost:4000/fay/2017/%E8%A7%A3%E5%86%B3Win10%E5%92%8CUbuntu16%E6%97%B6%E9%97%B4%E5%B7%AE%E7%9A%84%E9%97%AE%E9%A2%98/</guid>
         
         
       </item>
@@ -592,7 +799,126 @@ sudo service nginx reload
       </item>
     
       <item>
-        <title>Ubuntu 16.10 安装 WPS</title>
+        <title>Ubuntu 16.10 安装 Matlab R2017a</title>
+        <description>&lt;h3 id=&quot;download&quot;&gt;Download&lt;/h3&gt;
+&lt;ol&gt;
+  &lt;li&gt;SJTU-putao&lt;/li&gt;
+  &lt;li&gt;BaiduNetDisk&lt;/li&gt;
+  &lt;li&gt;DownloadIy.ir&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;img src=&quot;/home/faymek/Pictures/Selection_002.png&quot; alt=&quot;Selection_002&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;installation&quot;&gt;Installation&lt;/h3&gt;
+&lt;ol&gt;
+  &lt;li&gt;Mount dvd1.iso&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  mkdir /home/&amp;lt;username&amp;gt;/Matlab  
+  sudo mount -t auto -o loop *dvd1.iso所在的绝对路径 /home/&amp;lt;user name&amp;gt;/Matlab
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;We created a temporary folder to mount dvd1.iso and dvd2.iso(later). Please do not mount dvd2.iso before installation.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;Installation&lt;/p&gt;
+
+    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo /home/&amp;lt;username&amp;gt;/Matlab/install
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+    &lt;p&gt;Notice: The installation will be terminated if the terminal is at /home/&lt;username&gt;/Matlab .
+At first, you choose offline verification, and the license number lies in readme.txt in the &quot;Crack&quot; folder. Copy and paste the very first key (begin with 09806).&lt;/username&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Mount dvd2.iso
+  When the installation process goes to 75%, it asks for the dvd2.iso. We open another terminal (Ctrl+Alt+T), and do:&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  sudo mount -t auto -o loop *dvd2.iso所在的绝对路径 /home/&amp;lt;username&amp;gt;/Matlab
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Then we go back to the interface of installation to countinue.&lt;/p&gt;
+
+&lt;p&gt;​&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;Umount&lt;/p&gt;
+
+    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo umount /home/&amp;lt;username&amp;gt;/Matlab
+sudo umount /home/&amp;lt;username&amp;gt;/Matlab 
+sudo rm -r /home/&amp;lt;username&amp;gt;/Matlab 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+
+    &lt;p&gt;You need umount it twice because we mounted it twice. And you can choose to delete the temporary folder.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Crack&lt;/p&gt;
+
+    &lt;p&gt;You’d better open Matlab later.&lt;/p&gt;
+
+    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo mkdir /usr/local/MATLAB/R2017a/bin/licenses/  
+sudo cp license_standalone.lic所在的目录 /usr/local/MATLAB/R2017a/bin/licenses/  
+sudo cp libmwservices.so所在的目录 /usr/local/MATLAB/R2017a/bin/glnxa64/  
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+
+    &lt;p&gt;/usr/local/MATLAB/ is the default installation folder of Matlab.&lt;/p&gt;
+
+    &lt;p&gt;​&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Launch&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;   sudo /usr/local/MATLAB/R2017a/bin/matlab 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;At first launch, you may need to provide the license file. Locate it and finish activation.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Shortcut&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Some approaches to launch matlab conveniently.&lt;/p&gt;
+
+&lt;p&gt;a. matlab-support
+   Go to software center and install matlab-support. Or enter:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;   sudo apt install matlab-support
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Then you can launch it when searching applications.&lt;/p&gt;
+
+&lt;p&gt;You may find problems named Java error. The issue was that the .matlab folder in the Home directory was owned by root after this install. Try:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;   sudo chown [yourusername]:[yourusername] ~/.matlab
+   cd ~/.matlab
+   sudo chown -R [yourusername]:[yourusername] *
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;but still some questions:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;I found that changing only the ~/.matlab folder to be mine would allow the software to launch with -nojvm but the other start options showed errors. I originally thought this was a java issue, but actually it was hitting java IO exceptions from the bad folder permissions.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;From:https://cn.mathworks.com/matlabcentral/answers/98599-why-will-matlab-not-start-up-properly-on-my-linux-or-unix-based-system&lt;/p&gt;
+
+&lt;p&gt;b. alias
+   Change ~/.bashrc and add permanent alias.&lt;/p&gt;
+
+&lt;p&gt;c. Desktop shortcut&lt;/p&gt;
+</description>
+        <pubDate>Sun, 17 Sep 2017 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/fay/2017/Ubuntu-16.10%E5%AE%89%E8%A3%85Matlab-R2017a/</link>
+        <guid isPermaLink="true">http://localhost:4000/fay/2017/Ubuntu-16.10%E5%AE%89%E8%A3%85Matlab-R2017a/</guid>
+        
+        
+      </item>
+    
+      <item>
+        <title>Ubuntu 16.10 安装 WPS Office</title>
         <description>&lt;h2 id=&quot;前言&quot;&gt;前言&lt;/h2&gt;
 
 &lt;p&gt;ubuntu 16 默认安装了liberoffie，其实蛮好用的，使用页比较简单，但是不知道为什么打开Windows下用微软office创建的PPT会卡死，很蛋疼，所以想要把office软件换成WPS的Linux 版本。&lt;/p&gt;
@@ -611,9 +937,8 @@ WPS官方网站 ：&lt;a href=&quot;http://linux.wps.cn/&quot;&gt;http://linux.w
 安装的时候会提示有替代包，需要安装替代包。 
 命令如下&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo apt-get install lib32ncurses5 
-sudo apt-get install lib32z1
-123
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;apt-get &lt;span class=&quot;nb&quot;&gt;install &lt;/span&gt;lib32ncurses5 
+&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;apt-get &lt;span class=&quot;nb&quot;&gt;install &lt;/span&gt;lib32z1
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;h3 id=&quot;step3&quot;&gt;STEP3&lt;/h3&gt;
@@ -624,7 +949,6 @@ sudo apt-get install lib32z1
 &lt;p&gt;下载完成后，执行dpkg -i 安装这个依赖。&lt;/p&gt;
 
 &lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;dpkg &lt;span class=&quot;nt&quot;&gt;-i&lt;/span&gt; libpng12-0_1.2.49-1+deb7u2_amd64.deb
-12
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;h3 id=&quot;step4&quot;&gt;STEP4&lt;/h3&gt;
@@ -644,9 +968,9 @@ sudo apt-get install lib32z1
 1.权限设置,执行命令如下&lt;/p&gt;
 
 &lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;cd&lt;/span&gt; /usr/share/fonts/
-chmod 755 wps_symbol_fonts
+&lt;span class=&quot;nb&quot;&gt;chmod &lt;/span&gt;755 wps_symbol_fonts
 &lt;span class=&quot;nb&quot;&gt;cd&lt;/span&gt; /usr/share/fonts/wps_symbol_fonts 
-chmod 644 &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;chmod &lt;/span&gt;644 &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;2.生成缓存配置信息 
@@ -671,8 +995,8 @@ fc-cache
 &lt;/blockquote&gt;
 </description>
         <pubDate>Fri, 15 Sep 2017 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/fay/2017/Ubuntu-16.10-%E5%AE%89%E8%A3%85WPS/</link>
-        <guid isPermaLink="true">http://localhost:4000/fay/2017/Ubuntu-16.10-%E5%AE%89%E8%A3%85WPS/</guid>
+        <link>http://localhost:4000/fay/2017/Ubuntu-16.10-%E5%AE%89%E8%A3%85WPS-Office/</link>
+        <guid isPermaLink="true">http://localhost:4000/fay/2017/Ubuntu-16.10-%E5%AE%89%E8%A3%85WPS-Office/</guid>
         
         
       </item>
