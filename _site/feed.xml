@@ -3,11 +3,85 @@
   <channel>
     <title>Fay</title>
     <description>Faymek's think space.</description>
-    <link>http://localhost:4000/fay/</link>
-    <atom:link href="http://localhost:4000/fay/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 23 Sep 2018 00:40:02 +0800</pubDate>
-    <lastBuildDate>Sun, 23 Sep 2018 00:40:02 +0800</lastBuildDate>
+    <link>http://localhost:4444/</link>
+    <atom:link href="http://localhost:4444/feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Sat, 03 Nov 2018 21:16:06 +0800</pubDate>
+    <lastBuildDate>Sat, 03 Nov 2018 21:16:06 +0800</lastBuildDate>
     <generator>Jekyll v3.8.4</generator>
+    
+      <item>
+        <title>WSL 使用笔记</title>
+        <description>&lt;p&gt;关于WSL的参考文章很多，在此辑录少许，也将自己遇到的坑稍加编撰。&lt;/p&gt;
+
+&lt;h2 id=&quot;参考文章&quot;&gt;参考文章&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;WSL安装入门&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;a href=&quot;https://zhuanlan.zhihu.com/p/24537874&quot;&gt;简明的WSL教程&lt;/a&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;a href=&quot;https://zhuanlan.zhihu.com/WindowsSubsystemForLinux&quot;&gt;WSL 使用指南&lt;/a&gt;&lt;/p&gt;
+
+    &lt;p&gt;知乎专栏，系列文章比较全面地覆盖了WSL的使用实践&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;美化及开发环境配置&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;a href=&quot;https://spencerwoo.com/dowww/&quot;&gt;Dev on Windows with WSL，在 Windows 上用 WSL 优雅开发&lt;/a&gt;&lt;/p&gt;
+
+    &lt;p&gt;给出了WSL的“最美”实践，包括终端环境Hyper，VSCode开发环境（Python和C/C++）等&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;a href=&quot;https://daverupert.com/2018/04/developing-on-windows-with-wsl-and-visual-studio-code/&quot;&gt;Webdev on Windows with WSL and VS Code&lt;/a&gt;&lt;/p&gt;
+
+    &lt;p&gt;WSL+VSCode的开发环境配置，包括Git, Python, Node, Ruby&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;设置WSL的默认浏览器为Windows下的Chrome&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.smslit.top/2017/09/02/wsl-webbrowser/&quot;&gt;WSL(windows subsytem linux)下添加网络浏览器支持&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://shallowsky.com/blog/linux/ubuntu-default-browser.html&quot;&gt;Setting the default browser when update-alternatives fails&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://blog.csdn.net/qq_41014622/article/details/81515741&quot;&gt;在WSL上调用windows下的chromedriver及chrome浏览器进行自动化测试或爬取网页内容&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;个人踩坑&quot;&gt;个人踩坑&lt;/h2&gt;
+
+&lt;p&gt;在此列举一些还未解决的坑，有空详细叙述&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Ubuntu18.04 配置Gnome桌面环境失败&lt;/li&gt;
+  &lt;li&gt;jupyter notebook 与 selenium 无法同时使用chrome&lt;/li&gt;
+  &lt;li&gt;jekyll 没问题&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;已解决&quot;&gt;已解决&lt;/h3&gt;
+
+&lt;h4 id=&quot;wsl与windows的时差&quot;&gt;WSL与Windows的时差&lt;/h4&gt;
+
+&lt;p&gt;使用该命令显示错误：&lt;/p&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;timedatectl set-local-rtc 1 &lt;span class=&quot;nt&quot;&gt;--adjust-system-clock&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;换用如下命令，把时区调整到&lt;code class=&quot;highlighter-rouge&quot;&gt;Asia / Shanghai&lt;/code&gt;就好&lt;/p&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;dpkg-reconfigure tzdata
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+</description>
+        <pubDate>Sat, 03 Nov 2018 00:00:00 +0800</pubDate>
+        <link>http://localhost:4444/2018/WSL%E4%BD%BF%E7%94%A8%E7%AC%94%E8%AE%B0/</link>
+        <guid isPermaLink="true">http://localhost:4444/2018/WSL%E4%BD%BF%E7%94%A8%E7%AC%94%E8%AE%B0/</guid>
+        
+        
+      </item>
     
       <item>
         <title>解决Coursera国内速度慢的问题</title>
@@ -96,8 +170,8 @@
 
 </description>
         <pubDate>Tue, 31 Jul 2018 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/fay/2018/%E8%A7%A3%E5%86%B3Coursera%E5%9B%BD%E5%86%85%E9%80%9F%E5%BA%A6%E6%85%A2%E7%9A%84%E9%97%AE%E9%A2%98/</link>
-        <guid isPermaLink="true">http://localhost:4000/fay/2018/%E8%A7%A3%E5%86%B3Coursera%E5%9B%BD%E5%86%85%E9%80%9F%E5%BA%A6%E6%85%A2%E7%9A%84%E9%97%AE%E9%A2%98/</guid>
+        <link>http://localhost:4444/2018/%E8%A7%A3%E5%86%B3Coursera%E5%9B%BD%E5%86%85%E9%80%9F%E5%BA%A6%E6%85%A2%E7%9A%84%E9%97%AE%E9%A2%98/</link>
+        <guid isPermaLink="true">http://localhost:4444/2018/%E8%A7%A3%E5%86%B3Coursera%E5%9B%BD%E5%86%85%E9%80%9F%E5%BA%A6%E6%85%A2%E7%9A%84%E9%97%AE%E9%A2%98/</guid>
         
         
       </item>
@@ -156,8 +230,8 @@ trusted-host=mirrors.aliyun.com
 
 </description>
         <pubDate>Sat, 09 Jun 2018 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/fay/2018/PIP%E6%BA%90%E4%BD%BF%E7%94%A8%E5%9B%BD%E5%86%85%E9%95%9C%E5%83%8F/</link>
-        <guid isPermaLink="true">http://localhost:4000/fay/2018/PIP%E6%BA%90%E4%BD%BF%E7%94%A8%E5%9B%BD%E5%86%85%E9%95%9C%E5%83%8F/</guid>
+        <link>http://localhost:4444/2018/PIP%E6%BA%90%E4%BD%BF%E7%94%A8%E5%9B%BD%E5%86%85%E9%95%9C%E5%83%8F/</link>
+        <guid isPermaLink="true">http://localhost:4444/2018/PIP%E6%BA%90%E4%BD%BF%E7%94%A8%E5%9B%BD%E5%86%85%E9%95%9C%E5%83%8F/</guid>
         
         
       </item>
@@ -213,8 +287,8 @@ trusted-host=mirrors.aliyun.com
 &lt;p&gt;https://blog.csdn.net/u011475210/article/details/79023429&lt;/p&gt;
 </description>
         <pubDate>Sun, 25 Mar 2018 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/fay/2018/%E4%B8%AA%E4%BA%BA%E4%B8%BB%E9%A1%B5%E5%BB%BA%E8%AE%BE/</link>
-        <guid isPermaLink="true">http://localhost:4000/fay/2018/%E4%B8%AA%E4%BA%BA%E4%B8%BB%E9%A1%B5%E5%BB%BA%E8%AE%BE/</guid>
+        <link>http://localhost:4444/2018/%E4%B8%AA%E4%BA%BA%E4%B8%BB%E9%A1%B5%E5%BB%BA%E8%AE%BE/</link>
+        <guid isPermaLink="true">http://localhost:4444/2018/%E4%B8%AA%E4%BA%BA%E4%B8%BB%E9%A1%B5%E5%BB%BA%E8%AE%BE/</guid>
         
         
       </item>
@@ -239,8 +313,8 @@ trusted-host=mirrors.aliyun.com
 &lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;selenium&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;webdriver&lt;/span&gt;
 
 &lt;span class=&quot;n&quot;&gt;driver&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;webdriver&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Chrome&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;# driver = webdriver.Firefox()&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;driver&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'http://www.baidu.com'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;# driver = webdriver.Firefox()
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;driver&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'http://www.baidu.com'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;driver&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;title&lt;/span&gt;
 &lt;span class=&quot;n&quot;&gt;driver&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;quit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
@@ -289,16 +363,16 @@ trusted-host=mirrors.aliyun.com
 &lt;span class=&quot;n&quot;&gt;driver&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;webdriver&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Firefox&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
 &lt;span class=&quot;n&quot;&gt;driver&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;https://sg.search.yahoo.com/&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 &lt;span class=&quot;n&quot;&gt;searchWhat&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;driver&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;find_element_by_id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;yschsp&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;#获取id叫做'yschsp'的元素&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;searchWhat&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;clear&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;#通过clear方法，可以将输入框内的字符清空，比较保险的做法&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;searchWhat&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;send_keys&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;python&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;#通过send_keys方法把'python'传递给serchWhat元素，即id叫做'yschsp'的元素&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;searchBtn&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;driver&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;find_element_by_class_name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;sbb&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;#获取id叫做'sbb'的元素，但通常不推荐用class找，用selector能更精确的找到&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;searchBtn&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;click&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;#通过click()方法点击&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;span class=&quot;c1&quot;&gt;#获取id叫做'yschsp'的元素
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;searchWhat&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;clear&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;#通过clear方法，可以将输入框内的字符清空，比较保险的做法
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;searchWhat&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;send_keys&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;python&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;#通过send_keys方法把'python'传递给serchWhat元素，即id叫做'yschsp'的元素
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;searchBtn&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;driver&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;find_element_by_class_name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;sbb&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;#获取id叫做'sbb'的元素，但通常不推荐用class找，用selector能更精确的找到
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;searchBtn&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;click&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;#通过click()方法点击
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;运行后，可以看见浏览器自动输入python后，又点击了按钮进行了搜索。这就是selenium的强大之处，这样对于很多动态页面也能很方便地爬取了！&lt;/p&gt;
 
@@ -326,8 +400,8 @@ trusted-host=mirrors.aliyun.com
 
 &lt;h3 id=&quot;33-需要滚动才会加载新东西比如qq空间&quot;&gt;3.3 需要滚动才会加载新东西，比如qq空间&lt;/h3&gt;
 
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;js&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;document.documentElement.scrollTop=10000&quot;&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;#拖动滚动条到屏幕底端&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;driver&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;execute_script&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;js&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;js&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;document.documentElement.scrollTop=10000&quot;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;#拖动滚动条到屏幕底端
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;driver&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;execute_script&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;js&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;我们可以使用js强制滚动，这样就可以加载出新的元素。&lt;/p&gt;
@@ -338,37 +412,8 @@ trusted-host=mirrors.aliyun.com
 
 </description>
         <pubDate>Sat, 24 Mar 2018 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/fay/2018/selenium%E7%88%AC%E8%99%AB%E5%88%9D%E6%8E%A2/</link>
-        <guid isPermaLink="true">http://localhost:4000/fay/2018/selenium%E7%88%AC%E8%99%AB%E5%88%9D%E6%8E%A2/</guid>
-        
-        
-      </item>
-    
-      <item>
-        <title>Welcome to my thinkspace</title>
-        <description>&lt;p&gt;Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.&lt;/p&gt;
-
-&lt;h3 id=&quot;where-does-it-come-from&quot;&gt;Where does it come from?&lt;/h3&gt;
-
-&lt;p&gt;Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of “de Finibus Bonorum et Malorum” (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, “Lorem ipsum dolor sit amet..”, comes from a line in section 1.10.32.&lt;/p&gt;
-
-&lt;p&gt;The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from “de Finibus Bonorum et Malorum” by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.&lt;/p&gt;
-
-&lt;h3 id=&quot;why-do-we-use-it&quot;&gt;Why do we use it?&lt;/h3&gt;
-
-&lt;p&gt;It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using ‘Content here, content here’, making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for ‘lorem ipsum’ will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).&lt;/p&gt;
-
-&lt;h3 id=&quot;where-can-i-get-some&quot;&gt;Where can I get some?&lt;/h3&gt;
-
-&lt;p&gt;There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don’t look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn’t anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;This content was copied from http://www.lipsum.com/ as an example of post article.&lt;/p&gt;
-&lt;/blockquote&gt;
-</description>
-        <pubDate>Sun, 03 Dec 2017 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/fay/2017/Welcome-to-my-thinkspce/</link>
-        <guid isPermaLink="true">http://localhost:4000/fay/2017/Welcome-to-my-thinkspce/</guid>
+        <link>http://localhost:4444/2018/selenium%E7%88%AC%E8%99%AB%E5%88%9D%E6%8E%A2/</link>
+        <guid isPermaLink="true">http://localhost:4444/2018/selenium%E7%88%AC%E8%99%AB%E5%88%9D%E6%8E%A2/</guid>
         
         
       </item>
@@ -421,8 +466,8 @@ trusted-host=mirrors.aliyun.com
 
 </description>
         <pubDate>Wed, 25 Oct 2017 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/fay/2017/%E8%A7%A3%E5%86%B3Win10%E5%92%8CUbuntu16%E6%97%B6%E9%97%B4%E5%B7%AE%E7%9A%84%E9%97%AE%E9%A2%98/</link>
-        <guid isPermaLink="true">http://localhost:4000/fay/2017/%E8%A7%A3%E5%86%B3Win10%E5%92%8CUbuntu16%E6%97%B6%E9%97%B4%E5%B7%AE%E7%9A%84%E9%97%AE%E9%A2%98/</guid>
+        <link>http://localhost:4444/2017/%E8%A7%A3%E5%86%B3Win10%E5%92%8CUbuntu16%E6%97%B6%E9%97%B4%E5%B7%AE%E7%9A%84%E9%97%AE%E9%A2%98/</link>
+        <guid isPermaLink="true">http://localhost:4444/2017/%E8%A7%A3%E5%86%B3Win10%E5%92%8CUbuntu16%E6%97%B6%E9%97%B4%E5%B7%AE%E7%9A%84%E9%97%AE%E9%A2%98/</guid>
         
         
       </item>
@@ -792,8 +837,8 @@ sudo service nginx reload
 
 </description>
         <pubDate>Sat, 14 Oct 2017 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/fay/2017/%E9%98%BF%E9%87%8C%E4%BA%91%E9%83%A8%E7%BD%B2-django-gunicorn-nginx-mysql-ubuntu-python3/</link>
-        <guid isPermaLink="true">http://localhost:4000/fay/2017/%E9%98%BF%E9%87%8C%E4%BA%91%E9%83%A8%E7%BD%B2-django-gunicorn-nginx-mysql-ubuntu-python3/</guid>
+        <link>http://localhost:4444/2017/%E9%98%BF%E9%87%8C%E4%BA%91%E9%83%A8%E7%BD%B2-django-gunicorn-nginx-mysql-ubuntu-python3/</link>
+        <guid isPermaLink="true">http://localhost:4444/2017/%E9%98%BF%E9%87%8C%E4%BA%91%E9%83%A8%E7%BD%B2-django-gunicorn-nginx-mysql-ubuntu-python3/</guid>
         
         
       </item>
@@ -911,8 +956,8 @@ sudo cp libmwservices.so所在的目录 /usr/local/MATLAB/R2017a/bin/glnxa64/
 &lt;p&gt;c. Desktop shortcut&lt;/p&gt;
 </description>
         <pubDate>Sun, 17 Sep 2017 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/fay/2017/Ubuntu-16.10%E5%AE%89%E8%A3%85Matlab-R2017a/</link>
-        <guid isPermaLink="true">http://localhost:4000/fay/2017/Ubuntu-16.10%E5%AE%89%E8%A3%85Matlab-R2017a/</guid>
+        <link>http://localhost:4444/2017/Ubuntu-16.10%E5%AE%89%E8%A3%85Matlab-R2017a/</link>
+        <guid isPermaLink="true">http://localhost:4444/2017/Ubuntu-16.10%E5%AE%89%E8%A3%85Matlab-R2017a/</guid>
         
         
       </item>
@@ -995,8 +1040,8 @@ fc-cache
 &lt;/blockquote&gt;
 </description>
         <pubDate>Fri, 15 Sep 2017 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/fay/2017/Ubuntu-16.10-%E5%AE%89%E8%A3%85WPS-Office/</link>
-        <guid isPermaLink="true">http://localhost:4000/fay/2017/Ubuntu-16.10-%E5%AE%89%E8%A3%85WPS-Office/</guid>
+        <link>http://localhost:4444/2017/Ubuntu-16.10-%E5%AE%89%E8%A3%85WPS-Office/</link>
+        <guid isPermaLink="true">http://localhost:4444/2017/Ubuntu-16.10-%E5%AE%89%E8%A3%85WPS-Office/</guid>
         
         
       </item>
